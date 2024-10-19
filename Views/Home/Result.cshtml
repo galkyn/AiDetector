@@ -1,0 +1,66 @@
+@model AiDetector.ViewModels.ResultViewModel
+
+<div class="container mt-4">
+    <h2 class="mb-4">Analysis Result</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">Submitted Text</h3>
+        </div>
+        <div class="card-body">
+            <pre class="text-wrap">@Model.InputText</pre>
+        </div>
+    </div>
+
+    @if (Model.Data != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Analysis Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong>Text Words:</strong> <span class="badge badge-custom">@Model.Data.TextWords</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>AI Words:</strong> <span class="badge badge-custom">@Model.Data.AiWords</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>AI GPT:</strong> 
+                            <span class="badge badge-custom fake-percentage">@Model.Data.FakePercentage.ToString("F2")%</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No analysis data available.
+        </div>
+    }
+
+    <a href="/" class="btn btn-primary mt-4">Back to Home</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var $fakePercentageSpan = $('.fake-percentage');
+            var fakePercentageText = $fakePercentageSpan.text();
+            if (fakePercentageText) {
+                var fakePercentage = parseFloat(fakePercentageText);
+                
+                if (fakePercentage < 30) {
+                    $fakePercentageSpan.addClass('low');
+                } else if (fakePercentage > 70) {
+                    $fakePercentageSpan.addClass('high');
+                } else {
+                    $fakePercentageSpan.addClass('medium');
+                }
+            }
+        });
+    </script>
+}

@@ -1,0 +1,29 @@
+﻿@model AiDetector.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Submit Text for Analysis";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Enter text for analysis</h2>
+
+    <form asp-action="Submit" method="post">
+        <div class="form-group">
+            <label asp-for="InputText">Input Text:</label>
+            <textarea asp-for="InputText" class="form-control" rows="10" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">AI Detect</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                $('button[type="submit"]').prop('disabled', true).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...'
+                );
+            });
+        });
+    </script>
+}
